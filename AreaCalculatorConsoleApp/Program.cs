@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Author David Maceda
+// published Jan. 2020
+
+using System;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
 
