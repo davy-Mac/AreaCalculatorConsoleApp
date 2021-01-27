@@ -34,8 +34,8 @@ namespace AreaCalculatorConsoleApp
                 if (shape=="square")
                 {
                     askSquareSideSize();
-                    Thread.Sleep(1000);
                     side1 = double.Parse(Console.ReadLine());
+                    Thread.Sleep(1000);
                     calculateSquareArea(side1);
                     shapeCount += 1;
                     Console.WriteLine("The area of a square with sides of: " + side1
@@ -45,8 +45,8 @@ namespace AreaCalculatorConsoleApp
                 else if (shape=="circle")
                 {
                     askCircleRadius();
-                    Thread.Sleep(1000);
                     radius = double.Parse(Console.ReadLine());
+                    Thread.Sleep(1000);
                     calculareCircleArea(radius);
                     shapeCount += 1;
                     Console.WriteLine("The area of a circle with a radius of " + radius
@@ -56,8 +56,8 @@ namespace AreaCalculatorConsoleApp
                 else if (shape == "pentagon")
                 {
                     askPentagonSide();
-                    Thread.Sleep(1000);
                     side1 = double.Parse(Console.ReadLine());
+                    Thread.Sleep(1000);
                     calcPentagonArea(side1);
                     shapeCount += 1;
                     Console.WriteLine("The area of a Reegular Pentagon with sides of: " + side1
@@ -99,7 +99,7 @@ namespace AreaCalculatorConsoleApp
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Welcome to the area calculator app"
-                                    +Environment.NewLine + "please enter a shape name to calculate it's area"
+                                    +Environment.NewLine + "please enter a shape name to calculate its area"
                                     +Environment.NewLine + "you get to calculate 3 shapes e.g. square");
         }
 
