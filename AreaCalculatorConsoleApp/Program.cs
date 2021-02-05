@@ -12,117 +12,74 @@ namespace AreaCalculatorConsoleApp
         static void Main(string[] args)
         {
             ConsoleColor oldColor = Console.ForegroundColor;
+
             tellTheUserAboutTheApp();
             Console.ForegroundColor = oldColor;
 
-            int shapeCount = 0;
-            int shapeLimit = 3;
-            string shape = null;
-
-            double side1 = 0;
-            double side2 = 0;
-            double shapeBase = 0;
-            double radius = 0;
-            bool invalidShape = false;
-
-            double squareAreaResult = 0;
-            double circleAreaResult = 0;
-            double pentagonAreaResult = 0;
-
+            var shapeCount = 0;
+            const int shapeLimit = 5;
+            var invalidShape = false;
+            
             while (shapeCount < shapeLimit && !invalidShape)
             {
                 Console.WriteLine("choose one of three shapes: Square, Circle or Pentagon");
-                shape = Console.ReadLine().ToLower();
+                var shape = Console.ReadLine().ToLower();
 
+                double side = 0;
                 if (shape=="square")
                 {
-                    askSquareSideSize();
-                    side1 = double.Parse(Console.ReadLine());
+                    Messenger tell = new Messenger();
+                    tell.askSquareSideSize();
+                    IAreaCalculator squareArea = new Square();
+                    AreaCalculator areaCalculator = new AreaCalculator(squareArea);
+                    side = double.Parse(Console.ReadLine());
                     Thread.Sleep(1000);
-                    calculateSquareArea(side1);
+
+                    areaCalculator.squareArea(side);
                     shapeCount += 1;
-                    Console.WriteLine("The area of a square with sides of: " + side1
-                                      + Environment.NewLine + "is: " + squareAreaResult + "centimeters");
                 }
 
                 else if (shape=="circle")
                 {
-                    askCircleRadius();
-                    radius = double.Parse(Console.ReadLine());
+                    Messenger tell = new Messenger();
+                    tell.askCircleRadius();
+                    IAreaCalculator circleArea = new Circle();
+                    AreaCalculator areaCalculator = new AreaCalculator(circleArea);
+                    var radius = double.Parse(Console.ReadLine());
                     Thread.Sleep(1000);
-                    calculareCircleArea(radius);
+
+                    areaCalculator.circleArea(radius);
                     shapeCount += 1;
-                    Console.WriteLine("The area of a circle with a radius of " + radius
-                                      + Environment.NewLine + "is " + circleAreaResult + "centimeters");
                 }
 
                 else if (shape == "pentagon")
                 {
-                    askPentagonSide();
-                    side1 = double.Parse(Console.ReadLine());
+                    Messenger tell = new Messenger();
+                    tell.askPentagonSide();
+                    IAreaCalculator pentagonArea = new Circle();
+                    AreaCalculator areaCalculator = new AreaCalculator(pentagonArea);
+                    side = double.Parse(Console.ReadLine());
                     Thread.Sleep(1000);
-                    calcPentagonArea(side1);
+
+                    areaCalculator.pentagonArea(side);
                     shapeCount += 1;
-                    Console.WriteLine("The area of a Reegular Pentagon with sides of: " + side1
-                                      + Environment.NewLine + "is " + pentagonAreaResult + "centimeters");
                 }
+                else
+                {
+                    invalidShape = true;
+                    Messenger tell = new Messenger();
+                    tell.invalidShapeMessage();
 
-            }
-
-            //calc the area of a Square
-            double calculateSquareArea(double s1)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                squareAreaResult = side1 * side1;
-
-                return squareAreaResult;
-            }
-
-            // calc the area of a circle
-            double calculareCircleArea(double r1)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                circleAreaResult = (3.14) * radius * radius;
-
-                return circleAreaResult;
-            }
-
-            // calc the area of a pentagon
-            double calcPentagonArea(double s2)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                float area;
-                pentagonAreaResult = (float)(Math.Sqrt(5 * (5 + 2 *(Math.Sqrt(5)))) * s2 * s2) / 4;
-
-                return pentagonAreaResult;
-            }
+                }
+            }   
         }
 
-        static void tellTheUserAboutTheApp()
+        static void tellTheUserAboutTheApp() // this can be implemented differently to follow single responsibility principle 
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Welcome to the area calculator app"
-                                    +Environment.NewLine + "please enter a shape name to calculate its area"
-                                    +Environment.NewLine + "you get to calculate 3 shapes e.g. square");
+                              + Environment.NewLine + "please enter a shape name to calculate its area"
+                              + Environment.NewLine + "you get to calculate 3 shapes e.g. square");
         }
-
-        static void askSquareSideSize()
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Please enter the side size of the square in centimeters");
-        }
-
-        static void askCircleRadius()
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Please enter the radius in centimeters");
-        }
-
-        static void askPentagonSide()
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Please enter the side length of a Regular Pentagon in centimeters");
-        }
-
     }
 }
